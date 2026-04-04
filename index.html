@@ -5,72 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maturitní Zkoušedlo</title>
     <style>
-        /* Vycentrování celého obsahu */
+        /* Základní reset a vycentrování na střed obrazovky */
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             background-color: #f4f4f9; 
             margin: 0;
             display: flex;
-            justify-content: center; /* Horizontální centr */
-            align-items: center;    /* Vertikální centr */
-            min-height: 100vh;      /* Přes celou výšku displeje */
-            padding: 20px;          /* Menší padding pro mobily */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
             box-sizing: border-box;
         }
 
+        /* Hlavní karta s obsahem */
         .card { 
             background: white; 
             padding: 25px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            width: 100%;            /* Na mobilu přes celou šířku... */
-            max-width: 450px;       /* ...ale na PC se zastaví na 450px */
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08); 
+            width: 100%;
+            max-width: 480px; 
         }
 
-        /* Lepší čitelnost na mobilu */
-        h1 { font-size: 1.5rem; text-align: center; margin-top: 0; }
+        h1 { 
+            font-size: 1.6rem; 
+            text-align: center; 
+            margin-top: 0; 
+            color: #333;
+        }
+
+        h3 {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
         
-        .input-group { margin: 15px 0; display: flex; flex-direction: column; }
+        .input-group { 
+            margin: 15px 0; 
+            display: flex; 
+            flex-direction: column; 
+        }
         
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #444;
+        }
+
         input { 
             padding: 12px; 
-            border: 1px solid #ccc; 
-            border-radius: 6px; 
-            margin-top: 5px; 
-            font-size: 16px; /* Prevence automatického zoomu na iPhone */
+            border: 2px solid #e0e0e0; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            transition: border-color 0.2s;
+            outline: none;
         }
 
+        input:focus {
+            border-color: #007bff;
+        }
+
+        /* Tlačítka */
         button { 
             padding: 12px 20px; 
             cursor: pointer; 
             background: #007bff; 
             color: white; 
             border: none; 
-            border-radius: 6px; 
+            border-radius: 8px; 
             font-weight: bold;
-            transition: background 0.2s;
+            font-size: 15px;
+            transition: all 0.2s;
         }
 
-        button:hover { background: #0056b3; }
-        
-        /* Styl pro dynamické vstupy, aby nebyly nalepené na sobě */
-        #dynamicInputs input {
-            margin-bottom: 10px;
-            width: 100%;
-            box-sizing: border-box;
+        button:hover { 
+            background: #0056b3; 
+            transform: translateY(-1px);
         }
 
-        .correct { border: 2px solid #28a745; background-color: #d4edda; }
-        .wrong { border: 2px solid #dc3545; background-color: #f8d7da; }
-        
-        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+        button:active {
+            transform: translateY(0);
+        }
 
         .btn-reset {
-            background: #6c757d !important; /* Šedá barva */
+            background: #6c757d !important;
         }
 
         .btn-reset:hover {
             background: #5a6268 !important;
+        }
+
+        /* Barvy pro výsledky (přidávané přes JS) */
+        .correct { 
+            border-color: #28a745 !important; 
+            background-color: #d4edda; 
+        }
+
+        .wrong { 
+            border-color: #dc3545 !important; 
+            background-color: #f8d7da; 
+        }
+        
+        hr { 
+            border: 0; 
+            border-top: 1px solid #eee; 
+            margin: 25px 0; 
+        }
+
+        /* Mezery pro dynamicky generované inputy */
+        #dynamicInputs .input-group {
+            margin-bottom: 20px;
+        }
+
+        #resultMsg {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #333;
         }
     </style>
 </head>
@@ -78,19 +129,27 @@
 
     <div class="card">
         <h1>Maturitní test</h1>
+        
         <div class="input-group">
-            <label>Zadejte číslo otázky:</label>
-            <input type="number" id="questionPicker" placeholder="např. 5">
-            <button onclick="generujPolicka()" style="margin-top: 10px;">Vygenerovat test</button>
-            <button onclick="resetujVse()" class="btn-reset" style="flex: 1;">Reset</button>
+            <label for="questionPicker">Číslo otázky:</label>
+            <input type="number" id="questionPicker" placeholder="Zadejte číslo...">
+            
+            <div style="display: flex; gap: 10px; margin-top: 12px;">
+                <button onclick="generujPolicka()" style="flex: 2;">Vygenerovat test</button>
+                <button onclick="resetujVse()" class="btn-reset" style="flex: 1;">Reset</button>
+            </div>
         </div>
 
         <hr>
 
         <h3 id="displayTopic" style="text-align: center;">Vyberte otázku výše</h3>
+
         <div id="dynamicInputs"></div>
         
-        <button id="submitBtn" style="display:none; margin-top: 20px; width: 100%;" onclick="zkontrolujOdpovedi()">Odeslat ke kontrole</button>
+        <button id="submitBtn" style="display:none; margin-top: 25px; width: 100%; background-color: #28a745;" onclick="zkontrolujOdpovedi()">
+            Zkontrolovat vše najednou
+        </button>
+
         <p id="resultMsg" style="text-align: center; font-weight: bold;"></p>
     </div>
 
