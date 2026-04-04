@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Maturitní Zkoušedlo</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; background-color: #f4f4f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 500px; }
+        .input-group { margin: 15px 0; display: flex; flex-direction: column; }
+        input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px; }
+        button { padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #0056b3; }
+        .correct { border: 2px solid #28a745; background-color: #d4edda; }
+        .wrong { border: 2px solid #dc3545; background-color: #f8d7da; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Maturitní test</h1>
+        <div class="input-group">
+            <label>Zadejte číslo otázky:</label>
+            <input type="text" id="questionPicker">
+            <button onclick="generujPolicka()" style="margin-top: 10px;">Vygenerovat test</button>
+        </div>
+
+        <hr>
+
+        <h3 id="displayTopic">Vyberte otázku výše</h3>
+        <div id="dynamicInputs"></div>
+        
+        <button id="submitBtn" style="display:none; margin-top: 20px;" onclick="zkontrolujOdpovedi()">Odeslat ke kontrole</button>
+        <p id="resultMsg"></p>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
