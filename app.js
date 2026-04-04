@@ -1,25 +1,20 @@
-// Globální proměnná pro uchování dat aktuálně vybrané otázky
 let aktualniOtazka = null;
 
 /**
- * Hlavní funkce pro vygenerování testu podle čísla v inputu
+ * Vygeneruje test a pod každý input připraví skrytý prostor pro nápovědu
  */
 function generujPolicka() {
     const cislo = document.getElementById('questionPicker').value;
     const kontejner = document.getElementById('dynamicInputs');
     const nadpis = document.getElementById('displayTopic');
-    const submitBtn = document.getElementById('submitBtn');
     
-    // Reset plochy před novým generováním
     kontejner.innerHTML = "";
     document.getElementById('resultMsg').innerText = "";
 
-    // Kontrola, zda otázka existuje v data.js (MATURITA_DATA)
     if (typeof MATURITA_DATA !== 'undefined' && MATURITA_DATA[cislo]) {
         aktualniOtazka = MATURITA_DATA[cislo];
         nadpis.innerText = `Téma: ${aktualniOtazka.question}`;
 
-        // Projdeme všechny podbody v sekci dané otázky
         aktualniOtazka.section.forEach((bod, i) => {
             const skupina = document.createElement('div');
             skupina.className = "input-group";
@@ -32,53 +27,55 @@ function generujPolicka() {
             input.className = "user-answer";
             input.placeholder = "Doplňte název podbodu...";
 
-            // --- LOGIKA PRO MAZÁNÍ PŘI KLIKU/FOCUSU ---
+            // ELEMENT PRO CHYBOVOU ZPRÁVU (pod inputem)
+            const feedback = document.createElement('div');
+            feedback.className = "feedback-msg";
+            feedback.style.color = "#dc3545";
+            feedback.style.fontSize = "14px";
+            feedback.style.marginTop = "5px";
+            feedback.style.fontWeight = "600";
+            feedback.style.display = "none"; // Schovaný jako výchozí
+
+            // MAZÁNÍ PŘI KLIKU/FOCUSU
             const vymazPole = function() {
-                // Vymaže pole jen pokud už bylo vyhodnoceno (má barvu)
-                if (this.classList.contains('correct') || this.classList.contains('wrong')) {
-                    this.value = '';
-                    this.className = "user-answer";
-                }
+                input.className = "user-answer";
+                feedback.style.display = "none"; // Schová nápovědu pod inputem
+                feedback.innerText = "";
             };
 
             input.addEventListener('focus', vymazPole);
             input.addEventListener('click', vymazPole);
 
-            // --- LOGIKA PRO ENTER (VYHODNOTÍ JEN JEDEN) ---
             input.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
-                    zkontrolujOdpoved(i, input);
+                    zkontrolujOdpoved(i, input, feedback);
                 }
             });
 
-            // Tlačítko pro kontrolu jednotlivého řádku
             const tlacitko = document.createElement('button');
             tlacitko.className = "check-btn";
             tlacitko.innerText = "Zkontrolovat";
             tlacitko.style.marginTop = "5px";
-            tlacitko.onclick = () => zkontrolujOdpoved(i, input);
+            tlacitko.onclick = () => zkontrolujOdpoved(i, input, feedback);
 
-            // Sestavení prvků do DOMu
             skupina.appendChild(label);
             skupina.appendChild(input);
+            skupina.appendChild(feedback); // Přidáme nápovědu do skupiny
             skupina.appendChild(tlacitko);
             kontejner.appendChild(skupina);
         });
 
-        // Zobrazíme hlavní tlačítko pro kontrolu všeho
-        submitBtn.style.display = "block";
+        document.getElementById('submitBtn').style.display = "block";
     } else {
-        nadpis.innerText = "Vyberte otázku výše";
-        submitBtn.style.display = "none";
         alert("Tahle otázka v databázi není!");
     }
 }
 
 /**
- * Vyhodnotí jeden konkrétní input
+ * Zkontroluje jedno pole a zobrazí nápovědu POD ním
  */
-function zkontrolujOdpoved(index, input) {
+function zkontrolujOdpoved(index, input, feedback) {
     if (!aktualniOtazka) return;
 
     const zadanaOdpoved = input.value.trim().toLowerCase();
@@ -86,63 +83,63 @@ function zkontrolujOdpoved(index, input) {
 
     if (zadanaOdpoved === spravnaOdpoved) {
         input.className = "user-answer correct";
+        feedback.style.display = "none";
     } else {
         input.className = "user-answer wrong";
-        // Přidáme nápovědu, pokud tam už není
-        if (!input.value.includes("(Správně:")) {
-            input.value += ` (Správně: ${aktualniOtazka.section[index]})`;
-        }
+        feedback.innerText = `Správně: ${aktualniOtazka.section[index]}`;
+        feedback.style.display = "block"; // Zobrazí text pod inputem
     }
 }
 
 /**
- * Vyhodnotí celý test najednou (tlačítko dole)
+ * Hromadná kontrola všech polí najednou
  */
 function zkontrolujOdpovedi() {
     const vstupy = document.querySelectorAll('.user-answer');
+    const feedbacky = document.querySelectorAll('.feedback-msg');
     let skore = 0;
 
     vstupy.forEach((input, index) => {
-        // Očistíme text od případné nápovědy před kontrolou
-        const textBezNapovedy = input.value.split(' (')[0];
-        const odpoved = textBezNapovedy.trim().toLowerCase();
+        const odpoved = input.value.trim().toLowerCase();
         const spravne = aktualniOtazka.section[index].trim().toLowerCase();
+        const feedback = feedbacky[index];
 
         if (odpoved === spravne) {
             input.className = "user-answer correct";
+            feedback.style.display = "none";
             skore++;
         } else {
             input.className = "user-answer wrong";
-            if (!input.value.includes("(Správně:")) {
-                input.value = textBezNapovedy + ` (Správně: ${aktualniOtazka.section[index]})`;
-            }
+            feedback.innerText = `Správně: ${aktualniOtazka.section[index]}`;
+            feedback.style.display = "block";
         }
     });
 
     document.getElementById('resultMsg').innerText = `Hotovo! Úspěšnost: ${skore} z ${vstupy.length}.`;
 }
 
-/**
- * Resetuje vše kromě čísla otázky
- */
 function resetujVse() {
     const inputs = document.querySelectorAll('.user-answer');
+    const feedbacky = document.querySelectorAll('.feedback-msg');
     inputs.forEach(input => {
         input.value = '';
         input.className = "user-answer";
     });
+    feedbacky.forEach(f => {
+        f.style.display = "none";
+        f.innerText = "";
+    });
     document.getElementById('resultMsg').innerText = '';
 }
 
-// Počkej, až se načte DOM, a pak navaž Enter na výběr otázky
+// Enter pro questionPicker
 document.addEventListener('DOMContentLoaded', () => {
-    const questionPicker = document.getElementById('questionPicker');
-
-    if (questionPicker) {
-        questionPicker.addEventListener('keydown', (e) => {
+    const qPicker = document.getElementById('questionPicker');
+    if (qPicker) {
+        qPicker.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                e.preventDefault(); // Zabrání případnému obnovení stránky
-                generujPolicka();   // Spustí generování testu
+                e.preventDefault();
+                generujPolicka();
             }
         });
     }
