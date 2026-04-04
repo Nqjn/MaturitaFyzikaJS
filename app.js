@@ -89,3 +89,11 @@ function resetujVse() {
     // protože políčka zůstala rozbalená.
     document.getElementById('submitBtn').style.display = 'block';
 }
+
+// Sleduje kliknutí (focus) v divu s odpověďmi
+document.getElementById('dynamicInputs').addEventListener('focusin', (e) => {
+    if (e.target.tagName === 'INPUT') {
+        e.target.value = ''; // Vymaže text
+        e.target.classList.remove('correct', 'wrong'); // Odstraní barvy
+    }
+});
