@@ -66,7 +66,7 @@ const MATURITA_DATA = {
             "Vlastnosti Tekutin",
             "Tlak",
             "Pascalův zákon",
-            "Hydrostatická tlak",
+            "Hydrostatický tlak",
             "Tlak vzduchu",
             "Archimédův zákon",
             "Proudění",
