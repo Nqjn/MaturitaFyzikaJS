@@ -20,15 +20,15 @@ const MATURITA_DATA = {
             "Síla",
             "Účinky síly",
             "Skládání a rozklad sil",
-            "1. NWZ",
-            "2. NWZ",
-            "3. NWZ",
+            "1. NZ",
+            "2. NZ",
+            "3. NZ",
             "Tření",
             "Dostředivá síla",
-            "Inerciální a neinerciálníá soustava",
+            "Inerciální a neinerciální soustava",
             "Mechanická práce",
             "Mechanická energie",
-            "Výkonn a Účinnost"
+            "Výkon a Účinnost"
         ]
     },
     "3": {
@@ -49,7 +49,7 @@ const MATURITA_DATA = {
     "4": {
         "question": "Mechanika tuhého tělesa",
         "section": [
-            "Tůhé těleso",
+            "Tuhé těleso",
             "Pohyb tuhého tělesa",
             "Moment síly",
             "Momentová věta",
@@ -57,7 +57,7 @@ const MATURITA_DATA = {
             "Dvojice sil",
             "Těžiště",
             "Rovnovážná poloha",
-            "Kinetikcá energie"
+            "Kinetická energie"
         ]
     },
     "5": {
@@ -79,7 +79,7 @@ const MATURITA_DATA = {
     "6": {
         "question": "Gravitační pole a Keplerovy zákony",
         "section": [
-            "NW gravitační zákon",
+            "Newtonův gravitační zákon",
             "Typy polí",
             "Gravitační a tíhové zrychlení",
             "Tíha",
@@ -91,8 +91,8 @@ const MATURITA_DATA = {
         "question": "Elektrické pole",
         "section": [
             "Elektrický náboj",
-            "Coulombůlv zákon",
-            "Intezita elektrického pole",
+            "Coulombův zákon",
+            "Intenzita elektrického pole",
             "Typy polí",
             "Práce",
             "Potenciál a Napětí",
@@ -114,7 +114,7 @@ const MATURITA_DATA = {
             "IZO děje",
             "Kruhové děje",
             "2. Termodynamický zákon",
-            "Tepelelné motory"
+            "Tepelné motory"
         ]
     },
     "9": {
@@ -156,10 +156,10 @@ const MATURITA_DATA = {
             "Odpor",
             "Spojování rezistorů",
             "Ohmův zákon pro uzavřený obvod",
-            "Zátéžová charakteristika",
+            "Zátěžová charakteristika",
             "Ochrana proti zkratu",
             "Práce",
-            "Kirchhoffy zákony"
+            "Kirchhoffovy zákony"
         ]
     },
     "12": {
@@ -178,14 +178,14 @@ const MATURITA_DATA = {
     "13": {
         "question": "Vedení elektrického proudu v kapalinách, plynech a ve vakuu",
         "section": [
-            "Elktrolýza",
+            "Elektrolýza",
             "Faradayovy zákony",
             "VA charakteristika v kapalinách",
             "Galvanický článek",
             "Ionizace plynu",
             "VA charakteristika v plynech",
             "Výboje za atmosférického tlaku",
-            "Výboje za sniženého tlaku",
+            "Výboje za sníženého tlaku",
             "Katodové a kanálové záření"
         ]
     },
@@ -210,7 +210,7 @@ const MATURITA_DATA = {
             "Elektromagnetická indukce",
             "Magnetický indukční tok",
             "Závit v magnetickém poli",
-            "Indykovaný proud",
+            "Indukovaný proud",
             "Vířivé proudy",
             "Vlastní indukce",
             "Přechodný děj",
@@ -226,8 +226,8 @@ const MATURITA_DATA = {
             "Fáze kmitavého pohybu",
             "Skládání kmitání",
             "Dynamika kmitavého pohybu",
-            "Kyvadalo a pružinový oscilátor",
-            "vlastní a nucené kmitání",
+            "Kyvadlo a pružinový oscilátor",
+            "Vlastní a nucené kmitání",
             "Rezonance"
         ]
     },
@@ -251,7 +251,7 @@ const MATURITA_DATA = {
             "Zapojení spotřebičů většího výkonu",
             "Elektromotor",
             "Transformátor",
-            "Přenost energie",
+            "Přenos energie",
             "Typy elektráren"
         ]
     },
@@ -278,10 +278,10 @@ const MATURITA_DATA = {
         "section": [
             "Světlo",
             "Odraz a lom",
-            "disperze",
+            "Disperze",
             "Zobrazení zrcadly",
             "Zobrazení čočkami",
-            "Subjektování zobrazovací přístroje",
+            "Subjektivní zobrazovací přístroje",
             "Objektivní zobrazovací přístroje"
         ]
     }
