@@ -64,6 +64,14 @@
         .wrong { border: 2px solid #dc3545; background-color: #f8d7da; }
         
         hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+
+        .btn-reset {
+            background: #6c757d !important; /* Šedá barva */
+        }
+
+        .btn-reset:hover {
+            background: #5a6268 !important;
+        }
     </style>
 </head>
 <body>
@@ -74,6 +82,7 @@
             <label>Zadejte číslo otázky:</label>
             <input type="number" id="questionPicker" placeholder="např. 5">
             <button onclick="generujPolicka()" style="margin-top: 10px;">Vygenerovat test</button>
+            <button onclick="resetujVse()" class="btn-reset" style="flex: 1;">Reset</button>
         </div>
 
         <hr>

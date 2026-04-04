@@ -71,3 +71,21 @@ function zkontrolujOdpoved(index, tlacitko) {
 
 
 }
+
+function resetujVse() {
+    // 1. Najde všechny inputy uvnitř vygenerované sekce
+    const inputs = document.querySelectorAll('#dynamicInputs input');
+    
+    // 2. Projde každý input a vyčistí ho
+    inputs.forEach(input => {
+        input.value = '';             // Smaže text
+        input.classList.remove('correct', 'wrong'); // Odstraní barvy (zelená/červená)
+    });
+
+    // 3. Resetuje zprávu o výsledku
+    document.getElementById('resultMsg').innerText = '';
+
+    // Volitelné: ponechá tlačítko "Odeslat" viditelné, 
+    // protože políčka zůstala rozbalená.
+    document.getElementById('submitBtn').style.display = 'block';
+}
