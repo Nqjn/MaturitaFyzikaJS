@@ -32,7 +32,7 @@ const MATURITA_DATA = {
         ]
     },
     "3": {
-        "question": "ZÁKONY ZACHOVÁNÍ ENERGIE V RŮZNÝCH OBLASTECH FYZIKY",
+        "question": "Zákony zachování energie v různých oblastech fyziky",
         "section": [
             "Práce vs Energie",
             "Zákon zachování mechanické energie",
@@ -284,5 +284,65 @@ const MATURITA_DATA = {
             "Subjektivní zobrazovací přístroje",
             "Objektivní zobrazovací přístroje"
         ]
+    },
+        "21": {
+        "question": "Vlnové vlastnosti světla",
+        "section": [
+            "Interference",
+            "Interference na tenké vrstvě",
+            "Ohyb",
+            "Difrakce na mřížce",
+            "Polarizace světla"
+        ]
+    },
+    "22": {
+        "question": "Elektromagnetické záření a jeho energie",
+        "section": [
+            "Elektromagnetické spektrum",
+            "Tepelné záření",
+            "Luminiscence",
+            "RTG",
+            "Spektra látek",
+            "Záření černého tělesa"
+        ]
+    },
+    "23": {
+        "question": "Speciální teorie relativity",
+        "section": [
+            "Základní princip",
+            "Relativnost současnosti",
+            "Dilatace času",
+            "Kontrakce délek",
+            "Skládání rychlostí",
+            "Relativistická hmotnost a hybnost",
+            "Vztah energie a hmotnosti"
+        ]
+    },
+    "24": {
+        "question": "Základní pojmy kvantové fyziky",
+        "section": [
+            "Záření černého tělesa",
+            "Fotoefekt",
+            "Comptonův jev",
+            "Světelný dualismus",
+            "De Broglieho vlny",
+            "Význam vlnové funkce"
+        ]
+    },
+    "25": {
+        "question": "Atomistika",
+        "section": [
+            "Struktura a modely atomu",
+            "Spektrum atomu vodíku",
+            "Energie stavů",
+            "Kvantová čísla a Pauliho vylučovací princip",
+            "Lasery",
+            "Radioaktivita",
+            "Vazebná energie jádra",
+            "Jaderné reakce",
+            "Jaderný reaktor"
+        ]
     }
+    
+    
 }
