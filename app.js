@@ -1,15 +1,25 @@
 let aktualniOtazka = null;
 
 /**
- * Vygeneruje test a pod každý input připraví skrytý prostor pro nápovědu
+ * Vygeneruje test. Pokud dostane parametr 'dalsi', zvýší číslo v inputu o 1.
  */
-function generujPolicka() {
-    const cislo = document.getElementById('questionPicker').value;
+function generujPolicka(parametr = {}) {
+    const picker = document.getElementById('questionPicker');
+    
+    // Pokud chceme další otázku, zvýšíme hodnotu v inputu
+    if (parametr.dalsi === true) {
+        picker.value = parseInt(picker.value) + 1;
+    }
+
+    const cislo = picker.value;
     const kontejner = document.getElementById('dynamicInputs');
     const nadpis = document.getElementById('displayTopic');
+    const nextBtn = document.getElementById('nextQuestionBtn');
+    const submitBtn = document.getElementById('submitBtn');
     
     kontejner.innerHTML = "";
     document.getElementById('resultMsg').innerText = "";
+    nextBtn.style.display = "none"; // Schováme tlačítko "Další", dokud nezkontrolujeme
 
     if (typeof MATURITA_DATA !== 'undefined' && MATURITA_DATA[cislo]) {
         aktualniOtazka = MATURITA_DATA[cislo];
@@ -27,19 +37,17 @@ function generujPolicka() {
             input.className = "user-answer";
             input.placeholder = "Doplňte název podbodu...";
 
-            // ELEMENT PRO CHYBOVOU ZPRÁVU (pod inputem)
             const feedback = document.createElement('div');
             feedback.className = "feedback-msg";
             feedback.style.color = "#dc3545";
             feedback.style.fontSize = "14px";
             feedback.style.marginTop = "5px";
             feedback.style.fontWeight = "600";
-            feedback.style.display = "none"; // Schovaný jako výchozí
+            feedback.style.display = "none";
 
-            // MAZÁNÍ PŘI KLIKU/FOCUSU
             const vymazPole = function() {
                 input.className = "user-answer";
-                feedback.style.display = "none"; // Schová nápovědu pod inputem
+                feedback.style.display = "none";
                 feedback.innerText = "";
             };
 
@@ -61,20 +69,17 @@ function generujPolicka() {
 
             skupina.appendChild(label);
             skupina.appendChild(input);
-            skupina.appendChild(feedback); // Přidáme nápovědu do skupiny
+            skupina.appendChild(feedback);
             skupina.appendChild(tlacitko);
             kontejner.appendChild(skupina);
         });
 
-        document.getElementById('submitBtn').style.display = "block";
+        submitBtn.style.display = "block";
     } else {
         alert("Tahle otázka v databázi není!");
     }
 }
 
-/**
- * Zkontroluje jedno pole a zobrazí nápovědu POD ním
- */
 function zkontrolujOdpoved(index, input, feedback) {
     if (!aktualniOtazka) return;
 
@@ -87,13 +92,13 @@ function zkontrolujOdpoved(index, input, feedback) {
     } else {
         input.className = "user-answer wrong";
         feedback.innerText = `Správně: ${aktualniOtazka.section[index]}`;
-        feedback.style.display = "block"; // Zobrazí text pod inputem
+        feedback.style.display = "block";
     }
+    
+    // Zobrazíme tlačítko pro další otázku
+    document.getElementById('nextQuestionBtn').style.display = "block";
 }
 
-/**
- * Hromadná kontrola všech polí najednou
- */
 function zkontrolujOdpovedi() {
     const vstupy = document.querySelectorAll('.user-answer');
     const feedbacky = document.querySelectorAll('.feedback-msg');
@@ -116,6 +121,7 @@ function zkontrolujOdpovedi() {
     });
 
     document.getElementById('resultMsg').innerText = `Hotovo! Úspěšnost: ${skore} z ${vstupy.length}.`;
+    document.getElementById('nextQuestionBtn').style.display = "block";
 }
 
 function resetujVse() {
@@ -130,9 +136,9 @@ function resetujVse() {
         f.innerText = "";
     });
     document.getElementById('resultMsg').innerText = '';
+    document.getElementById('nextQuestionBtn').style.display = "none";
 }
 
-// Enter pro questionPicker
 document.addEventListener('DOMContentLoaded', () => {
     const qPicker = document.getElementById('questionPicker');
     if (qPicker) {

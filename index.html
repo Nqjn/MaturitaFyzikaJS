@@ -150,7 +150,12 @@
             Zkontrolovat vše najednou
         </button>
 
-        <p id="resultMsg" style="text-align: center; font-weight: bold;"></p>
+        <button id="nextQuestionBtn" style="display: none; margin-top: 25px; width: 100%; background-color: #0b5c69;" 
+                onclick="generujPolicka({ dalsi: true })">
+            Další otázka
+        </button>
+        
+        <p id="resultMsg" style="text-align: center; font-weight: bold;" onclick="generujPolicka({ cislo: parseInt(cislo) + 1 })"></p>
     </div>
 
     <script src="data.js"></script>
