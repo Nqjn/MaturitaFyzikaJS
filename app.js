@@ -4,6 +4,7 @@ let aktualniOtazka = null;
  * Vygeneruje test. Pokud dostane parametr 'dalsi', zvýší číslo v inputu o 1.
  */
 function generujPolicka(parametr = {}) {
+    window.scrollTo(0,0);
     const picker = document.getElementById('questionPicker');
     
     // Pokud chceme další otázku, zvýšíme hodnotu v inputu
@@ -14,6 +15,7 @@ function generujPolicka(parametr = {}) {
     if (parametr.prev) {
         picker.value = parseInt(picker.value) - 1;
     }
+
 
     const cislo = picker.value;
     const kontejner = document.getElementById('dynamicInputs');
