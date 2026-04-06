@@ -11,15 +11,21 @@ function generujPolicka(parametr = {}) {
         picker.value = parseInt(picker.value) + 1;
     }
 
+    if (parametr.prev) {
+        picker.value = parseInt(picker.value) - 1;
+    }
+
     const cislo = picker.value;
     const kontejner = document.getElementById('dynamicInputs');
     const nadpis = document.getElementById('displayTopic');
     const nextBtn = document.getElementById('nextQuestionBtn');
+    const prevBtn = document.getElementById('prevQuestionBtn');
     const submitBtn = document.getElementById('submitBtn');
     
     kontejner.innerHTML = "";
     document.getElementById('resultMsg').innerText = "";
-    nextBtn.style.display = "none"; // Schováme tlačítko "Další", dokud nezkontrolujeme
+    nextBtn.style.display = "none";
+    prevBtn.style.display = "none";
 
     if (typeof MATURITA_DATA !== 'undefined' && MATURITA_DATA[cislo]) {
         aktualniOtazka = MATURITA_DATA[cislo];
@@ -75,6 +81,7 @@ function generujPolicka(parametr = {}) {
         });
 
         submitBtn.style.display = "block";
+
     } else {
         alert("Tahle otázka v databázi není!");
     }
@@ -96,7 +103,11 @@ function zkontrolujOdpoved(index, input, feedback) {
     }
     
     // Zobrazíme tlačítko pro další otázku
+    const cislo = parseInt(document.getElementById('questionPicker').value);
+
     document.getElementById('nextQuestionBtn').style.display = "block";
+    document.getElementById('prevQuestionBtn').style.display = cislo > 1 ? "inline-block" : "none";
+
 }
 
 function zkontrolujOdpovedi() {
@@ -119,9 +130,11 @@ function zkontrolujOdpovedi() {
             feedback.style.display = "block";
         }
     });
+    cislo = parseInt(document.getElementById('questionPicker').value);
 
     document.getElementById('resultMsg').innerText = `Hotovo! Úspěšnost: ${skore} z ${vstupy.length}.`;
     document.getElementById('nextQuestionBtn').style.display = "block";
+    document.getElementById('prevQuestionBtn').style.display = cislo > 1 ? "inline-block" : "none";
 }
 
 function resetujVse() {
@@ -137,6 +150,7 @@ function resetujVse() {
     });
     document.getElementById('resultMsg').innerText = '';
     document.getElementById('nextQuestionBtn').style.display = "none";
+    document.getElementById('prevQuestionBtn').style.display = "none";
 }
 
 document.addEventListener('DOMContentLoaded', () => {
